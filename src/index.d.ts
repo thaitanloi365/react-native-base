@@ -137,7 +137,9 @@ declare module "react-native-base" {
     children?: React.ReactElement[] | React.ReactNode | React.ReactElement;
   }
 
-  interface StatusBarProps extends RNStatusBarProps {}
+  interface StatusBarProps extends RNStatusBarProps {
+    style?: StyleProp<ViewStyle>;
+  }
 
   interface HeaderProps extends ViewProps {
     statusBarProps?: StatusBarProps;

@@ -5,6 +5,10 @@ import Device from "../Utils/Device";
 const statusBarHeight = Device.getStatusBarHeight(true);
 const isIOS = Device.isIOS();
 
+/**
+ *
+ * @param {import("react-native-base").StatusBarProps} props
+ */
 const StatusBar = props => {
   if (isIOS) {
     const { style, barStyle, networkActivityIndicatorVisible, showHideTransition, backgroundColor, animated } = props;

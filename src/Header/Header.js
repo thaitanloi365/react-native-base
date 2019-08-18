@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { View } from "react-native";
 import StatusBar from "../StatusBar/StatusBar";
 import Text from "../Text/Text";
 import Device from "../Utils/Device";
@@ -100,7 +100,10 @@ Header.defaultProps = {
   statusBarVisible: true,
   statusBarColor: "transparent",
   statusBarStyle: "light-content",
-  backgroundColor: "white"
+  backgroundColor: "white",
+  statusBarProps: {
+    hidden: false
+  }
 };
 
 export default Header;
