@@ -11,7 +11,7 @@ const Button = props => {
   const { style, raised, text, textStyle, loading = false, indicatorProps = { color: "white" }, ...other } = props;
   return (
     <Touchable
-      style={StyleSheet.flatten([style, styles.button, raised && styles.raised])}
+      style={StyleSheet.flatten([styles.button, raised && styles.raised, style])}
       disabled={loading}
       {...other}
     >
