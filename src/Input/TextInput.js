@@ -54,7 +54,9 @@ class TextInput extends React.Component {
   };
 
   onTextChanged = text => {
-    this.setState({ text }, () => {
+    const { formatText = text => text } = this.props;
+
+    this.setState({ text: formatText(text) }, () => {
       if (this.props.onChangeText) {
         this.props.onChangeText(text);
       }
@@ -170,6 +172,7 @@ class TextInput extends React.Component {
             multiline={multiline}
             numberOfLines={numberOfLines}
             scrollEnabled={scrollEnabled}
+            value={this.state.text}
           />
           {RenderNode(View, RightComponent)}
         </View>

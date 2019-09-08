@@ -12,9 +12,9 @@ const vs = longDimension / _baseHeight;
 
 const _isAndroid = Platform.OS == "android";
 
-const _pixelDensity = PixelRatio.get();
-const _adjustedWidth = width * _pixelDensity;
-const _adjustedHeight = height * _pixelDensity;
+const _pixelRatio = PixelRatio.get();
+const _adjustedWidth = width * _pixelRatio;
+const _adjustedHeight = height * _pixelRatio;
 
 function isAndroid() {
   return _isAndroid;
@@ -53,9 +53,9 @@ function getHeaderHeight() {
 
 function deviceType() {
   let type = "Phone";
-  if (_pixelDensity < 2 && (_adjustedWidth >= 1000 || _adjustedHeight >= 1000)) {
+  if (_pixelRatio < 2 && (_adjustedWidth >= 1000 || _adjustedHeight >= 1000)) {
     type = "Tablet";
-  } else if (_pixelDensity === 2 && (_adjustedWidth >= 1920 || _adjustedHeight >= 1920)) {
+  } else if (_pixelRatio === 2 && (_adjustedWidth >= 1920 || _adjustedHeight >= 1920)) {
     type = "Tablet";
   }
   return type;
@@ -75,6 +75,79 @@ function setBaseSize(width, height) {
   _baseHeight = height;
 }
 
+/**
+ *
+ * @param {number} size
+ * @return number
+ */
+function normalize(size) {
+  if (_pixelRatio >= 2 && _pixelRatio < 3) {
+    // iphone 5s and older Androids
+    if (width < 360) {
+      return size * 0.95;
+    }
+
+    // iphone 5
+    if (height < 667) {
+      return size;
+      // iphone 6-6s
+    }
+
+    if (height >= 667 && height <= 735) {
+      return size * 1.15;
+    }
+    // older phablets
+    return size * 1.25;
+  }
+
+  if (_pixelRatio >= 3 && _pixelRatio < 3.5) {
+    // catch Android font scaling on small machines
+    // where pixel ratio / font scale ratio => 3:3
+    if (width <= 360) {
+      return size;
+    }
+
+    // Catch other weird android width sizings
+    if (height < 667) {
+      return size * 1.15;
+      // catch in-between size Androids and scale font up
+      // a tad but not too much
+    }
+
+    if (height >= 667 && height <= 735) {
+      return size * 1.2;
+    }
+
+    // catch larger devices
+    // ie iphone 6s plus / 7 plus / mi note 等等
+    return size * 1.27;
+  }
+
+  if (_pixelRatio >= 3.5) {
+    // catch Android font scaling on small machines
+    // where pixel ratio / font scale ratio => 3:3
+    if (width <= 360) {
+      return size;
+      // Catch other smaller android height sizings
+    }
+
+    if (height < 667) {
+      return size * 1.2;
+      // catch in-between size Androids and scale font up
+      // a tad but not too much
+    }
+
+    if (height >= 667 && height <= 735) {
+      return size * 1.25;
+    }
+
+    // catch larger phablet devices
+    return size * 1.4;
+  }
+
+  return size;
+}
+
 export default {
   getScreenSize,
   isAndroid,
@@ -89,5 +162,6 @@ export default {
   hs,
   vs,
   getStatusBarStyle,
-  setBaseSize
+  setBaseSize,
+  normalize
 };

@@ -176,6 +176,7 @@ declare module "react-native-base" {
     RightComponent?: React.ReactElement | React.FunctionComponent;
     InputAccessoryComponent?: React.ReactElement | React.FunctionComponent;
     inputAccessoryContainerStyle?: StyleProp<ViewStyle>;
+    formatText?: (text: string) => string;
     onPress?: () => void;
   }
 
@@ -254,7 +255,7 @@ declare module "react-native-base" {
     [key in ToastType]: {
       source: ImageSourcePropType;
       color: string;
-    }
+    };
   };
 
   export type ToastType = "Info" | "Success" | "Error" | "Warn" | "Error";
@@ -335,6 +336,8 @@ declare module "react-native-base" {
     export function getStatusBarStyle(): StatusBarStyle | null;
 
     export function setBaseSize(width: number, height: number): void;
+
+    export function normalize(size: number): number;
   }
 
   export class Text extends React.Component<TextProps, any> {}

@@ -84,7 +84,7 @@ const App = () => {
             }}
           />
         </Row>
-        <TextInput placeholder="asdfasdf" />
+        <TextInput placeholder="asdfasdf" formatText={text => text.toUpperCase()} />
       </Container>
       <Toast ref={_toastRef} />
       <Loading ref={_loadingRef} />
